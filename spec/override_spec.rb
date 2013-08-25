@@ -45,7 +45,10 @@ describe Override do
       result = test.my_instance_method("baz")
       result.should eq "baz"
     end
-    
+    it "should call own method" do 
+      result = test.my_instance_method("baz")
+      result.should eq "foo"
+    end
   end
 
   context "call without argument" do

@@ -30,5 +30,7 @@ class TestException
 end
 
 class Test0 < Test 
-
+  let :my_instance_method, String do |str| 
+    "foo"
+  end
 end
