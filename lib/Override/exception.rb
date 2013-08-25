@@ -1,0 +1,1 @@
+class NotImplementError < Exception ; end

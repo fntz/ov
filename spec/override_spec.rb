@@ -70,7 +70,7 @@ describe Override do
       expect{ test.my_instance_method()}.to raise_error(NotImplementError)
     end
   end
-
+  
 end
 
 

@@ -1,12 +1,11 @@
 require "Override/version"
 require "Override/override_method"
 require "Override/override_any"
+require "Override/exception"
 
-class NotImplementError < Exception
-end
 
 module Override
-  def self.included(base)
+  def self.included(base) #:nodoc:
     base.extend(self)
     base.class_eval do 
       class_variable_set(:@@__overridable_methods, [])
