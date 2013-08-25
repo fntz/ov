@@ -21,6 +21,7 @@ module Override
 
   def method_missing(method, *args, &block)
     types = *args.map(&:class)
+    method = :this if method == :initialize
     z = self.class.__overridable_methods.find_all{|_| _.first == method}.find{|_| _[1] == types}
     raise NotImplementError.new("Method `#{method}` with types `#{types}` not implemented.") if z.nil?
 

@@ -14,3 +14,13 @@ class Test
     my_instance_method([], my_instance_method("bar"))
   end  
 end
+
+class TestInitialize
+  undef :initialize
+  include Override
+  attr_reader :str
+  let :this, String do |str|
+    str << "foo"
+    @str = str
+  end
+end

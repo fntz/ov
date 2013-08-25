@@ -25,7 +25,11 @@ describe Override do
   end
 
   context "override initialize method" do
-
+    it "return new instance with #this method" do 
+      test = TestInitialize.new("bar")
+      test.str.should eq "barfoo"
+      test.class.should eq TestInitialize
+    end
   end
 
   context "exceptions" do 
