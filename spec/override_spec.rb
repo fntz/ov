@@ -22,8 +22,32 @@ describe Override do
         result.should eq ["bar"]
       end
     end
-    
   end
+
+  context "override initialize method" do
+
+  end
+
+  context "exceptions" do 
+
+  end
+  
+  context "inheritance" do 
+
+  end
+
+  context "call without argument" do
+
+  end
+
+  context "call with Any argument" do
+
+  end
+
+  context "call with optional arguments" do
+
+  end
+  
 
 end
 

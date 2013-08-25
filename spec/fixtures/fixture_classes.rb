@@ -1,6 +1,6 @@
 class Test
   include Override
-
+  
   let :my_instance_method, Array, String do |arr, str|
     arr << str
     arr
@@ -13,5 +13,4 @@ class Test
   let :my_instance_method, Fixnum do |fixnum|
     my_instance_method([], my_instance_method("bar"))
   end  
-
 end
