@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Override do 
 
   context "instance methods" do 
-    
     context "#my_instance_method" do 
       let(:test){Test.new}
       
@@ -71,11 +70,6 @@ describe Override do
       expect{ test.my_instance_method()}.to raise_error(NotImplementError)
     end
   end
-
- context "call with optional arguments" do
-
-  end
-  
 
 end
 

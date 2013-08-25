@@ -48,3 +48,4 @@ class TestAny
     any
   end
 end
+
