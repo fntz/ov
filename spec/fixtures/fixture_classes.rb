@@ -18,10 +18,13 @@ end
 class TestInitialize
   undef :initialize
   include Override
-  attr_reader :str
+  attr_reader :arg 
   let :this, String do |str|
     str << "foo"
-    @str = str
+    @arg = str
+  end
+  let :this, Fixnum do |fx|
+    @arg = fx*100
   end
 end
 

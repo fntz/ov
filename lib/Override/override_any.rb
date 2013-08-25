@@ -1,4 +1,4 @@
 module Override
-  class Any
+  class Any # :nodoc:
   end
 end
