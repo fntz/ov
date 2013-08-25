@@ -52,7 +52,11 @@ describe Override do
   end
 
   context "call without argument" do
-
+    let(:test) {TestWithoutArguments.new}
+    it do 
+      result = test.my_instance_method
+      result.should eq "foo"
+    end
   end
 
   context "call with Any argument" do

@@ -34,3 +34,10 @@ class Test0 < Test
     "foo"
   end
 end
+
+class TestWithoutArguments 
+  include Override
+  let :my_instance_method do 
+    "foo"
+  end
+end

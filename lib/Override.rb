@@ -17,16 +17,11 @@ module Override
   end
 
   def let(name, *types, &block)
-    #__overridable_methods.delete_if{|_| 
-    #  _.name == name && _.types == types
-    #}
     __overridable_methods << OverrideMethod.new(name, types, self, block)
-
   end
 
   def method_missing(method, *args, &block)
     types = *args.map(&:class)
-
     method = :this if method == :initialize
     
     #first find in class
@@ -38,7 +33,7 @@ module Override
     
     z = _ms.find{|_| _.types == types and _.owner == owner} ||
         _ms.find{|_| _.types == types and _.owner == parent} 
-
+        
     raise NotImplementError.new("Method `#{method}` in `#{owner}` class with types `#{types}` not implemented.") if z.nil?
 
     _block = z.body
