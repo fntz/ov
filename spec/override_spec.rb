@@ -42,8 +42,8 @@ describe Override do
   context "inheritance" do 
     let(:test){Test0.new}
     it "should call parent method" do 
-      result = test.my_instance_method("baz")
-      result.should eq "baz"
+      result = test.my_instance_method(["foo", "bar"], "baz")
+      result.should eq ["foo", "bar", "baz"]
     end
     it "should call own method" do 
       result = test.my_instance_method("baz")
