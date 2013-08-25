@@ -41,3 +41,10 @@ class TestWithoutArguments
     "foo"
   end
 end
+
+class TestAny
+  include Override
+  let :my_instance_method, Any do |any| 
+    any
+  end
+end

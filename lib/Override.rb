@@ -1,5 +1,6 @@
 require "Override/version"
 require "Override/override_method"
+require "Override/override_any"
 
 class NotImplementError < Exception
 end
@@ -31,8 +32,17 @@ module Override
     _ms = owner.__overridable_methods
              .find_all{|_| _.name == method}
     
-    z = _ms.find{|_| _.types == types and _.owner == owner} ||
-        _ms.find{|_| _.types == types and _.owner == parent} 
+    compare = lambda do |a, b| 
+      return false if a.size != b.size
+      !a.zip(b).map do |arr| 
+        first, last = arr 
+        true if (first == Override::Any) || (last == Override::Any) || (first == last)  
+      end.include?(nil)
+    end  
+    
+    z = _ms.find{|_| compare[_.types, types] and _.owner == owner} ||
+        _ms.find{|_| compare[_.types, types] and _.owner == parent} 
+
         
     raise NotImplementError.new("Method `#{method}` in `#{owner}` class with types `#{types}` not implemented.") if z.nil?
 
