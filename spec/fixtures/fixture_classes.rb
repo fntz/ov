@@ -28,3 +28,7 @@ end
 class TestException
   include Override
 end
+
+class Test0 < Test 
+
+end

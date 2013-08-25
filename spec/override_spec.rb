@@ -40,7 +40,12 @@ describe Override do
   end
   
   context "inheritance" do 
-
+    let(:test){Test0.new}
+    it "should call parent method" do 
+      result = test.my_instance_method("baz")
+      result.should eq "baz"
+    end
+    
   end
 
   context "call without argument" do
