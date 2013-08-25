@@ -33,7 +33,10 @@ describe Override do
   end
 
   context "exceptions" do 
-
+    let(:test){TestException.new}
+    it "throw NotImplementError when method not defined" do 
+      expect { test.some_method("foo") }.to raise_error(NotImplementError)
+    end
   end
   
   context "inheritance" do 

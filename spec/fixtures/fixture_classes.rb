@@ -24,3 +24,7 @@ class TestInitialize
     @str = str
   end
 end
+
+class TestException
+  include Override
+end
