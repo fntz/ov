@@ -74,6 +74,13 @@ describe Override do
       expect{ test.my_instance_method()}.to raise_error(NotImplementError)
     end
   end
+
+  context "#super" do 
+    let (:test) { TestC.new }
+    it do 
+      test.test_method("foo").should eq "C"
+    end
+  end
   
 end
 
