@@ -53,23 +53,3 @@ class TestAny
     any
   end
 end
-=begin
-class TestA 
-  include Override
-  let :test_method, String do |str|
-    "A"
-  end
-end
-
-class TestB < TestA
-  let :test_method, String do |str|
-    "B" 
-  end
-end
-
-class TestC < TestA
-  let :test_method, String do |str|
-    super 
-  end
-end
-=end

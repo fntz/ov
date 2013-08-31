@@ -38,27 +38,7 @@ require "Override/exception"
 #   my_class = MyClass.new
 #   my_class.cool_method(3)     # => 300
 #   my_class.cool_method("foo") # => foo!  
-#
-#
-# == Initialize Method
 # 
-# For define overloaded `initialize` method use `this`
-#   
-#   class MyClass
-#     include Override  
-#     attr_accessor :arg     
-#     undef :initialize #remove own method
-#     let :this, Fixnum do |arg|
-#       @arg = arg
-#     end
-#     let :this, String do |arg|
-#       @arg = arg
-#     end
-#   end
-#   
-#   my_class = MyClass.new(1)     # => @arg == 1
-#   my_class = MyClass.new("foo") # => @arg == "foo"     
-#  
 # == Any Type
 #  
 #   class MyClass 
@@ -129,43 +109,11 @@ module Override
 
           raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types}` not implemented.") if z.nil?
           _block = z.body
-          instance_exec(*args, &_block)
+          instance_exec(*args, &_block)  
         end
       end
     end   
   end
-
-  def method_missing(method, *args, &block) # :nodoc:
-=begin    
-    types = *args.map(&:class)
-    method = :this if method == :initialize
-    
-    #first find in class
-    #after in parent class
-    owner, parent = self.class, self.class.superclass
-
-    _ms = owner.__overridable_methods
-             .find_all{|_| _.name == method}
-    
-    compare = lambda do |a, b| 
-      return false if a.size != b.size
-      !a.zip(b).map do |arr| 
-        first, last = arr 
-        true if (first == Override::Any) || (last == Override::Any) || (first == last)  
-      end.include?(nil)
-    end  
-    
-    z = _ms.find{|_| compare[_.types, types] and _.owner == owner} ||
-        _ms.find{|_| compare[_.types, types] and _.owner == parent} 
-
-        
-    raise NotImplementError.new("Method `#{method}` in `#{owner}` class with types `#{types}` not implemented.") if z.nil?
-
-    _block = z.body
-    instance_exec(*args, &_block)
-=end 
-  end
- 
 end
 
 
