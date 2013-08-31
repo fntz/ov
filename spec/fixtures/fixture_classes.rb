@@ -16,20 +16,22 @@ class Test
 end
 
 class TestInitialize
-  undef :initialize
   include Override
   attr_reader :arg 
-  let :this, String do |str|
+  let :initialize, String do |str|
     str << "foo"
     @arg = str
   end
-  let :this, Fixnum do |fx|
+  let :initialize, Fixnum do |fx|
     @arg = fx*100
   end
 end
 
+
 class TestException
   include Override
+  let :some_method, Fixnum do |fx|
+  end
 end
 
 class Test0 < Test 
@@ -51,7 +53,7 @@ class TestAny
     any
   end
 end
-
+=begin
 class TestA 
   include Override
   let :test_method, String do |str|
@@ -70,4 +72,4 @@ class TestC < TestA
     super 
   end
 end
-
+=end

@@ -97,9 +97,46 @@ module Override
   #
   def let(name, *types, &block)
     __overridable_methods << OverrideMethod.new(name, types, self, block)
+    
+    if !self.method_defined?(name)
+      self.instance_exec do
+        self.send(:define_method, name) do |*args, &block|
+          types = *args.map(&:class)
+          owner = self.class
+          
+          compare = lambda do |a, b| 
+            return false if a.size != b.size
+            !a.zip(b).map do |arr| 
+              first, last = arr 
+              true if (first == Override::Any) || (last == Override::Any) || (first == last)  
+            end.include?(nil)
+          end
+          
+          #find all ancestors which have our method
+          methods = owner.ancestors.find_all do |ancestor| 
+            if name != :initialize
+              ancestor.method_defined?(name) && ancestor.class == Class
+            else 
+              true if ancestor.method_defined?(:__overridable_methods) && ancestor.class == Class
+            end
+          end.map do |ancestor| 
+            ancestor.__overridable_methods.find_all {|m| m.name == name }
+          end.flatten.find_all do |method|
+            compare[method.types, types]
+          end.uniq
+
+          z = methods.find{|_| _.owner == owner} || methods.first
+
+          raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types}` not implemented.") if z.nil?
+          _block = z.body
+          instance_exec(*args, &_block)
+        end
+      end
+    end   
   end
 
   def method_missing(method, *args, &block) # :nodoc:
+=begin    
     types = *args.map(&:class)
     method = :this if method == :initialize
     
@@ -126,7 +163,9 @@ module Override
 
     _block = z.body
     instance_exec(*args, &_block)
+=end 
   end
+ 
 end
 
 

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Override do 
-
   context "instance methods" do 
     context "#my_instance_method" do 
       let(:test){Test.new}
@@ -11,10 +10,10 @@ describe Override do
         result.should eq ["foo", "bar", "baz"]
       end
 
-      it "return string" do 
+     it "return string" do 
         result = test.my_instance_method("baz")
         result.should eq "baz"
-      end
+     end
 
       it "return overridable method" do
         result = test.my_instance_method(1)
@@ -41,7 +40,7 @@ describe Override do
       expect { test.some_method("foo") }.to raise_error(NotImplementError)
     end
   end
-  
+
   context "inheritance" do 
     let(:test){Test0.new}
     it "should call parent method" do 
@@ -54,6 +53,7 @@ describe Override do
     end
   end
 
+ 
   context "call without argument" do
     let(:test) {TestWithoutArguments.new}
     it do 
@@ -74,14 +74,14 @@ describe Override do
       expect{ test.my_instance_method()}.to raise_error(NotImplementError)
     end
   end
-
+=begin
   context "#super" do 
     let (:test) { TestC.new }
     it do 
       test.test_method("foo").should eq "C"
     end
   end
-  
+=end
 end
 
 
