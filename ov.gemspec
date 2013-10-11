@@ -5,7 +5,7 @@ require 'ov/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "ov"
-  spec.version       = Override::VERSION
+  spec.version       = Ov::VERSION
   spec.authors       = ["fntzr"]
   spec.email         = ["fantazuor@gmail.com"]
   spec.description   = %q{write overridable methods for fun :)}
