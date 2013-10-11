@@ -1,4 +1,5 @@
 require "ov/version"
+require "ov/array"
 require "ov/ov_method"
 require "ov/ov_any"
 require "ov/exception"
@@ -59,7 +60,7 @@ module Ov
   def self.included(base) # :nodoc:
     base.extend(self)
     base.class_eval do 
-      class_variable_set(:@@__overridable_methods, [])
+      class_variable_set(:@@__overridable_methods, OA.new)
     end
   end
 
@@ -84,6 +85,8 @@ module Ov
           types = *args.map(&:class)
           owner = self.class
           
+           
+
           compare = lambda do |a, b| 
             return false if a.size != b.size
             !a.zip(b).map do |arr| 
