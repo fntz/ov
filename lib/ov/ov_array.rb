@@ -19,10 +19,9 @@ module Ov
     end
 
     def find_or_next(method, &block)
+      return self if @complete
       ev_block = yield(method)
-      if ev_block && !@complete
-        @complete, @result = true, ev_block
-      end
+      @complete, @result = true, ev_block if ev_block
       self
     end
 
