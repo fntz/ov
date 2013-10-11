@@ -90,8 +90,7 @@ module Ov
 
           z = owner.__overridable_methods.where(method)
           raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types}` not implemented.") if z.nil?
-          _block = z.body
-          instance_exec(*args, &_block)  
+          instance_exec(*args, &z.body)  
         end
       end
     end   
