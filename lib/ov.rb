@@ -1,5 +1,5 @@
 require "ov/version"
-require "ov/array"
+require "ov/ov_array"
 require "ov/ov_method"
 require "ov/ov_any"
 require "ov/exception"
@@ -59,13 +59,13 @@ require "ov/exception"
 module Ov
   def self.included(base) # :nodoc:
     base.extend(self)
-    base.class_eval do 
+    base.class_eval do
       class_variable_set(:@@__overridable_methods, OA.new)
     end
   end
 
   def __overridable_methods # :nodoc:
-    class_variable_get(:@@__overridable_methods)
+    send(:class_variable_get, :@@__overridable_methods)
   end
 
   ##
@@ -77,6 +77,7 @@ module Ov
   # +types+ types for method
   #
   def let(name, *types, &block)
+    
     __overridable_methods << OverrideMethod.new(name, types, self, block)
     
     if !self.method_defined?(name)
@@ -84,32 +85,10 @@ module Ov
         self.send(:define_method, name) do |*args, &block|
           types = *args.map(&:class)
           owner = self.class
-          
-           
+            
+          method = OverrideMethod.new(name, types, owner) 
 
-          compare = lambda do |a, b| 
-            return false if a.size != b.size
-            !a.zip(b).map do |arr| 
-              first, last = arr 
-              true if (first == Ov::Any) || (last == Ov::Any) || (first == last)  
-            end.include?(nil)
-          end
-          
-          #find all ancestors which have our method
-          methods = owner.ancestors.find_all do |ancestor| 
-            if name != :initialize
-              ancestor.method_defined?(name) && ancestor.class == Class
-            else 
-              true if ancestor.method_defined?(:__overridable_methods) && ancestor.class == Class
-            end
-          end.map do |ancestor| 
-            ancestor.__overridable_methods.find_all {|m| m.name == name }
-          end.flatten.find_all do |method|
-            compare[method.types, types]
-          end.uniq
-
-          z = methods.find{|_| _.owner == owner} || methods.first
-
+          z = owner.__overridable_methods.where(method)
           raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types}` not implemented.") if z.nil?
           _block = z.body
           instance_exec(*args, &_block)  

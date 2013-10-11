@@ -53,7 +53,7 @@ describe Ov do
     end
   end
 
- 
+  
   context "call without argument" do
     let(:test) {TestWithoutArguments.new}
     it do 
@@ -61,7 +61,7 @@ describe Ov do
       result.should eq "foo"
     end
   end
-
+ 
   context "call with Any argument" do
     let(:test) {TestAny.new}
     it do 
@@ -69,13 +69,13 @@ describe Ov do
       test.my_instance_method("foo").should eq "foo"
       test.my_instance_method(:foo).should eq :foo
     end
+  
     it "exception when many arguments or without arguments" do 
       expect{ test.my_instance_method(1,2,3)}.to raise_error(NotImplementError)
       expect{ test.my_instance_method()}.to raise_error(NotImplementError)
-    end
-  end
+    end   
+  end 
 end
-
 
 
 
