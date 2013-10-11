@@ -1,3 +1,3 @@
-require 'Override'
+require 'ov'
 require 'fixtures/fixture_classes'
 

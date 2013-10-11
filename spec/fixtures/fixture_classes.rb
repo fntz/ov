@@ -1,5 +1,5 @@
 class Test
-  include Override
+  include Ov
   
   let :my_instance_method, Array, String do |arr, str|
     arr << str
@@ -16,7 +16,7 @@ class Test
 end
 
 class TestInitialize
-  include Override
+  include Ov
   attr_reader :arg 
   let :initialize, String do |str|
     str << "foo"
@@ -29,7 +29,7 @@ end
 
 
 class TestException
-  include Override
+  include Ov
   let :some_method, Fixnum do |fx|
   end
 end
@@ -41,14 +41,14 @@ class Test0 < Test
 end
 
 class TestWithoutArguments 
-  include Override
+  include Ov
   let :my_instance_method do 
     "foo"
   end
 end
 
 class TestAny
-  include Override
+  include Ov
   let :my_instance_method, Any do |any| 
     any
   end

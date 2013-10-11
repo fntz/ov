@@ -1,26 +1,26 @@
-require "Override/version"
-require "Override/override_method"
-require "Override/override_any"
-require "Override/exception"
+require "ov/version"
+require "ov/ov_method"
+require "ov/ov_any"
+require "ov/exception"
 
 
 ##
-# `Override` module provides functional for creating methods 
+# `Ov` module provides functional for creating methods 
 # with types in Ruby.
 #
 #
 # == Usage
 #   
-# Firstly include `Override` in you class
+# Firstly include `Ov` in you class
 #  
 #   class MyClass        
-#     include Override 
+#     include Ov 
 #   end
 #
 # After define method with types:
 #   
 #   class MyClass
-#     include Override   
+#     include Ov   
 #     
 #     # with Fixnum type 
 #     let :cool_method, Fixnum do |num|
@@ -42,7 +42,7 @@ require "Override/exception"
 # == Any Type
 #  
 #   class MyClass 
-#     include Override
+#     include Ov
 #     let :cool_method, Any do |any|
 #       any
 #     end 
@@ -55,7 +55,7 @@ require "Override/exception"
 # Is the same so ruby `def` 
 #
 #
-module Override
+module Ov
   def self.included(base) # :nodoc:
     base.extend(self)
     base.class_eval do 
@@ -88,7 +88,7 @@ module Override
             return false if a.size != b.size
             !a.zip(b).map do |arr| 
               first, last = arr 
-              true if (first == Override::Any) || (last == Override::Any) || (first == last)  
+              true if (first == Ov::Any) || (last == Ov::Any) || (first == last)  
             end.include?(nil)
           end
           

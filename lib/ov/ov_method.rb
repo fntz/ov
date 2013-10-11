@@ -1,4 +1,4 @@
-module Override 
+module Ov 
   class OverrideMethod # :nodoc: 
     attr_accessor :types, :body, :name, :owner
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Override do 
+describe Ov do 
   context "instance methods" do 
     context "#my_instance_method" do 
       let(:test){Test.new}
