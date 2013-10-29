@@ -82,9 +82,18 @@ module Ov
     
     if !self.method_defined?(name)
       self.instance_exec do
-        self.send(:define_method, name) do |*args, &block|
+        message = if self.class == Module 
+          :define_singleton_method
+        else
+          :define_method
+        end  
+        self.send(message, name) do |*args, &block|
           types = *args.map(&:class)
-          owner = self.class
+          owner = if self.class == Module
+            self
+          else
+            self.class
+          end
             
           method = OverrideMethod.new(name, types, owner) 
 
