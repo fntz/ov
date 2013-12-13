@@ -67,7 +67,8 @@ module Ov
   def __overridable_methods # :nodoc:
     send(:class_variable_get, :@@__overridable_methods)
   end
-
+  
+  private :__overridable_methods
   ##
   # Create new method with +name+ and +types+
   # When method called +block+ will be executed
@@ -97,7 +98,7 @@ module Ov
             
           method = OverrideMethod.new(name, types, owner) 
 
-          z = owner.__overridable_methods.where(method)
+          z = owner.send(:__overridable_methods).where(method)
           raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types}` not implemented.") if z.nil?
           instance_exec(*args, &z.body)  
         end
