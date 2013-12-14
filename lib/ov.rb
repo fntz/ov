@@ -56,6 +56,23 @@ require "ov/exception"
 # Is the same so ruby `def` 
 #
 #
+# == Define as class methods
+# 
+#   class MyClass
+#     self << class
+#       let :cool_method, Fixnum do |f|
+#         f + 1
+#       end
+#       let :cool_method, String do |s|
+#         "{s}"
+#       end
+#     end
+#   end 
+#
+#
+#   MyClass.cool_method(1)      #=> 2
+#   MyClass.cool_method("test") #=> "test"
+#
 module Ov
   
   def self.included(base) # :nodoc:

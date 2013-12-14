@@ -21,16 +21,16 @@ Or install it yourself as:
 Firstly include `Ov` in you class
 
 ```ruby 
-class MyClass        
+class MyClass 
   include Ov 
 end
-```  
+```
 
 After define method with types:
 
-```ruby  
+```ruby
 class MyClass
-  include Ov   
+  include Ov
   
   #with Fixnum type 
   let :cool_method, Fixnum do |num|
@@ -46,13 +46,34 @@ end
 #And now
 my_class = MyClass.new
 my_class.cool_method(3)     # => 300
-my_class.cool_method("foo") # => foo!  
+my_class.cool_method("foo") # => foo! 
 ```
+
+Class Methods
+--------------
+
+```ruby
+class MyClass
+  self << class
+    let :cool_method, Fixnum do |f|
+      f + 1
+    end
+    let :cool_method, String do |s|
+      "{s}"
+    end
+  end
+end 
+
+
+MyClass.cool_method(1)      #=> 2
+MyClass.cool_method("test") #=> "test"
+```
+
 
 Any Type
 ----------
 
-```ruby  
+```ruby
 class MyClass 
   include Ov
   let :cool_method, Any do |any|
