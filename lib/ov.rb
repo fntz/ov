@@ -57,13 +57,14 @@ require "ov/exception"
 #
 #
 module Ov
+  
   def self.included(base) # :nodoc:
     base.extend(self)
     base.class_eval do
-      class_variable_set(:@@__overridable_methods, OA.new)
+      class_variable_set(:@@__overridable_methods, OA.new) if !class_variable_defined?(:@@__overridable_methods)
     end
   end
-
+  
   def __overridable_methods # :nodoc:
     send(:class_variable_get, :@@__overridable_methods)
   end
@@ -83,23 +84,27 @@ module Ov
     
     if !self.method_defined?(name)
       self.instance_exec do
-        message = if self.class == Module 
+        message = if self.class == Module
           :define_singleton_method
         else
           :define_method
-        end  
+        end
+        
         self.send(message, name) do |*args, &block|
           types = *args.map(&:class)
           owner = if self.class == Module
             self
+          elsif self.respond_to?(:ancestors) && self == ancestors.first
+            self.singleton_class
           else
             self.class
           end
-            
           method = OverrideMethod.new(name, types, owner) 
-
-          z = owner.send(:__overridable_methods).where(method)
-          raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") if z.nil?
+          z = owner.send(:__overridable_methods).where(method) 
+          
+          if z.nil?  #!self.respond_to?(:ancestors)
+            raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
+          end
           instance_exec(*args, &z.body)  
         end
       end
