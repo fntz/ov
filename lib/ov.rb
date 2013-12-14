@@ -99,10 +99,11 @@ module Ov
           else
             self.class
           end
+          
           method = OverrideMethod.new(name, types, owner) 
           z = owner.send(:__overridable_methods).where(method) 
           
-          if z.nil?  #!self.respond_to?(:ancestors)
+          if z.nil?
             raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
           end
           instance_exec(*args, &z.body)  
