@@ -1,5 +1,12 @@
 require 'spec_helper'
 
+class A
+  extend Ov
+  
+  
+end
+
+
 describe Ov do 
   context "instance methods" do 
     context "#my_instance_method" do 
@@ -96,7 +103,39 @@ describe Ov do
       end
     end      
   end
+  
+  describe "#let class methods" do
+    context "#my_instance_method" do 
+      let(:test){TestSingletonClass}
+      let(:test_ins){TestSingletonClass.new}
+      
+      it "return array" do 
+        result = test.my_instance_method(["foo", "bar"], "baz")
+        result.should eq ["foo", "bar", "baz"]
+      end
+
+      it "return string" do 
+        result = test.my_instance_method("baz")
+        result.should eq "baz"
+      end
+
+      it "return overridable method" do
+        result = test.my_instance_method(1)
+        result.should eq ["bar"]
+      end
+      
+      it "instance return string" do 
+        result = test_ins.my_instance_method("baz")
+        result.should eq "baz"
+      end
+      
+      it "exception when not defined" do 
+        expect{ test_ins.my_instance_method(1,2,3)}.to raise_error(NotImplementError)
+     end
+    end
+  end
 end
+
 
 
 
