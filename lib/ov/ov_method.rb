@@ -12,25 +12,25 @@ module Ov
       end 
     end
 
-    def eql?(other)
+    def eql?(other) #:nodoc:
       return true if @name == other.name && @types == other.types && @owner == other.owner
       false
     end
 
-    def eql0?(other)
-      @ancestors.find{|a|  
+    def eql0?(other) #:nodoc:
+      @ancestors.find{|a|
         a.__overridable_methods.find{|m| 
           m.name == other.name && m.types == other.types 
         }
       }
     end
 
-    def like?(other)
-      return compare?(types, other.types) if @name == other.name
+    def like?(other) #:nodoc:
+      return compare?(types, other.types) if @name == other.name 
       false
     end
 
-    def like0?(other)
+    def like0?(other) #:nodoc:
       @ancestors.find{|a| 
         a.__overridable_methods.find{|m| 
           m.like?(other) 

@@ -26,19 +26,5 @@ module Ov
     end
 
     alias :get :result
-
-    private 
-    
-    def compare(a, b)
-      return false if a.size != b.size
-      !a.zip(b).map do |arr| 
-        first, last = arr 
-        true if (first == Ov::Any) || (last == Ov::Any) || (first == last)  
-      end.include?(nil)
-    end
-
-    def compare0(a, b)
-
-    end
   end
 end
