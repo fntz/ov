@@ -1,4 +1,4 @@
-Copyright (c) 2013 fntzr
+Copyright (c) 2013-2014 fntzr
 
 MIT License
 
