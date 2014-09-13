@@ -50,7 +50,8 @@ require "ov/exception"
 #   end
 #   
 #   my_class = MyClass.new
-#   my_class.cool_method(1)     # => 1 
+#   my_class.cool_method(1) 
+#     => 1 
 #   my_class.cool_method("foo") # => "foo"
 #
 # Is the same so ruby `def` 
@@ -121,7 +122,7 @@ module Ov
           z = owner.send(:__overridable_methods).where(method) 
           
           if z.nil?
-            raise NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
+            raise Ov::NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
           end
           instance_exec(*args, &z.body)  
         end

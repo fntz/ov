@@ -44,7 +44,7 @@ describe Ov do
   context "exceptions" do 
     let(:test){TestException.new}
     it "throw NotImplementError when method not defined" do 
-      expect { test.some_method("foo") }.to raise_error(NotImplementError)
+      expect { test.some_method("foo") }.to raise_error(Ov::NotImplementError)
     end
   end
 
@@ -78,8 +78,8 @@ describe Ov do
     end
   
     it "exception when many arguments or without arguments" do 
-      expect{ test.my_instance_method(1,2,3)}.to raise_error(NotImplementError)
-      expect{ test.my_instance_method()}.to raise_error(NotImplementError)
+      expect{ test.my_instance_method(1,2,3)}.to raise_error(Ov::NotImplementError)
+      expect{ test.my_instance_method()}.to raise_error(Ov::NotImplementError)
     end   
   end 
      
@@ -130,7 +130,7 @@ describe Ov do
       end
       
       it "exception when not defined" do 
-        expect{ test_ins.my_instance_method(1,2,3)}.to raise_error(NotImplementError)
+        expect{ test_ins.my_instance_method(1,2,3)}.to raise_error(Ov::NotImplementError)
      end
     end
   end

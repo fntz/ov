@@ -15,7 +15,7 @@ module Matching
     end
     begin
       z.anon_method(*args)
-    rescue NotImplementError => e 
+    rescue Ov::NotImplementError => e 
       z.otherwise
     end  
   end
