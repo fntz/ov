@@ -86,9 +86,32 @@ my_class.cool_method(1)     => 1
 my_class.cool_method("foo") => "foo"
 ```
 
+
+Redefine methods
+
+```ruby
+class A 
+  def test(str)
+    p "A#test" 
+  end
+end
+
+class B < A 
+  include Ov
+  let :test, Fixnum do |num|
+    p "only for fixnum"
+  end
+end 
+
+b = B.new
+b.test("asd") # => A#test
+b.test(123)   # => only for fixnum
+
+```
+
 Examples
 --------
-see [link](https://github.com/fntzr/ov/blob/master/samples/example.rb)
+see [link](https://github.com/fntzr/ov/blob/master/samples)
 
 ## Contributing
 
