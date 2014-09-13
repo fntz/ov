@@ -97,6 +97,13 @@ module Ov
   # +types+ types for method
   #
   def let(name, *types, &block)
+    included = false 
+    
+    if self.instance_methods.include?(name)
+      included = true
+      class_eval "alias :ov_old_#{name.to_s} #{name}"
+      undef_method name
+    end   
     
     __overridable_methods << OverrideMethod.new(name, types, self, block)
     
@@ -122,9 +129,14 @@ module Ov
           z = owner.send(:__overridable_methods).where(method) 
           
           if z.nil?
-            raise Ov::NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
+            if included
+              send("ov_old_#{name.to_s}", *args, &block)
+            else 
+              raise Ov::NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
+            end
+          else 
+            instance_exec(*args, &z.body)   
           end
-          instance_exec(*args, &z.body)  
         end
       end
     end   
