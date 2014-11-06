@@ -79,15 +79,15 @@ module Ov
   def self.included(base) # :nodoc:
     base.extend(self)
     base.class_eval do
-      class_variable_set(:@@__overridable_methods, OA.new) if !class_variable_defined?(:@@__overridable_methods)
+      class_variable_set(:@@__overload_methods, OA.new) if !class_variable_defined?(:@@__overload_methods)
     end
   end
   
-  def __overridable_methods # :nodoc:
-    send(:class_variable_get, :@@__overridable_methods)
+  def __overload_methods # :nodoc:
+    send(:class_variable_get, :@@__overload_methods)
   end
   
-  private :__overridable_methods
+  private :__overload_methods
   ##
   # Create new method with +name+ and +types+
   # When method called +block+ will be executed
@@ -105,7 +105,7 @@ module Ov
       undef_method name
     end   
     
-    __overridable_methods << OverrideMethod.new(name, types, self, block)
+    __overload_methods << OverrideMethod.new(name, types, self, block)
     
     if !self.method_defined?(name)
       self.instance_exec do
@@ -120,7 +120,7 @@ module Ov
           owner = need_owner()
           
           method = OverrideMethod.new(name, types, owner) 
-          z = owner.send(:__overridable_methods).where(method) 
+          z = owner.send(:__overload_methods).where(method) 
           
           if z.nil?
             if included

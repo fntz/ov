@@ -8,7 +8,7 @@ module Ov
     def initialize(name, types, owner, body = proc{})
       @name, @types, @owner, @body = name, types, owner, body
       @ancestors = owner.ancestors.find_all do |ancestor| 
-        ancestor.method_defined?(:__overridable_methods) && ancestor.class == Class
+        ancestor.method_defined?(:__overload_methods) && ancestor.class == Class
       end 
     end
 
@@ -19,7 +19,7 @@ module Ov
 
     def eql0?(other) #:nodoc:
       @ancestors.find{|a|
-        a.__overridable_methods.find{|m| 
+        a.__overload_methods.find{|m| 
           m.name == other.name && m.types == other.types 
         }
       }
@@ -32,7 +32,7 @@ module Ov
 
     def like0?(other) #:nodoc:
       @ancestors.find{|a| 
-        a.__overridable_methods.find{|m| 
+        a.__overload_methods.find{|m| 
           m.like?(other) 
         }
       }

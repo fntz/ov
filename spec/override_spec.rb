@@ -22,14 +22,14 @@ describe Ov do
         expect(result).to eq "baz"
      end
 
-      it "return overridable method" do
+      it "return overload method" do
         result = test.my_instance_method(1)
         expect(result).to eq ["bar"]
       end
     end
   end
 
-  context "override initialize method" do
+  context "overload initialize method" do
     it "return new instance with #this method" do 
       test = TestInitialize.new("bar")
       expect(test.arg).to eq "barfoo"
@@ -97,7 +97,7 @@ describe Ov do
         expect(result).to eq "baz"
      end
 
-      it "return overridable method" do
+      it "return overload method" do
         result = test.my_instance_method(1)
         expect(result).to eq ["bar"]
       end
@@ -119,7 +119,7 @@ describe Ov do
         expect(result).to eq "baz"
       end
 
-      it "return overridable method" do
+      it "return overload method" do
         result = test.my_instance_method(1)
         expect(result).to eq ["bar"]
       end

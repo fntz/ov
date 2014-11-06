@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Ov::VERSION
   spec.authors       = ["fntzr"]
   spec.email         = ["fantazuor@gmail.com"]
-  spec.description   = %q{write overridable methods for fun :)}
-  spec.summary       = %q{ov gem provides hacks for write polymorphic methods in Ruby.}
+  spec.description   = %q{write overloaded methods for fun :)}
+  spec.summary       = %q{ov gem provides hacks for write multimemethods in Ruby.}
   spec.homepage      = "https://github.com/fntzr/ov"
   spec.license       = "MIT"
 
