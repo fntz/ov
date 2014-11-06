@@ -117,13 +117,7 @@ module Ov
         
         self.send(message, name) do |*args, &block|
           types = *args.map(&:class)
-          owner = if self.class == Module
-            self
-          elsif self.respond_to?(:ancestors) && self == ancestors.first
-            self.singleton_class
-          else
-            self.class
-          end
+          owner = need_owner()
           
           method = OverrideMethod.new(name, types, owner) 
           z = owner.send(:__overridable_methods).where(method) 
@@ -141,6 +135,17 @@ module Ov
       end
     end   
   end
+
+  private 
+    def need_owner
+      if self.class == Module
+          self
+        elsif self.respond_to?(:ancestors) && self == ancestors.first
+          self.singleton_class
+        else
+          self.class
+        end
+    end
 end
 
 
