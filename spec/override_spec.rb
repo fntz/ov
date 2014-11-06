@@ -26,6 +26,10 @@ describe Ov do
         result = test.my_instance_method(1)
         expect(result).to eq ["bar"]
       end
+
+      it "return all let methods" do 
+        expect(test.multimethods.size).to eq(3)
+      end
     end
   end
 
@@ -38,6 +42,8 @@ describe Ov do
       test0 = TestInitialize.new(1)
       expect(test0.arg).to eq 100
       expect(test0.class).to eq TestInitialize
+
+      expect(test.multimethods.size).to eq(2)
     end
   end
 
@@ -57,6 +63,9 @@ describe Ov do
     it "should call own method" do 
       result = test.my_instance_method("baz")
       expect(result).to eq "foo"
+    end
+    it "should return multimethods" do 
+      expect(test.multimethods.size).to eq(1)
     end
   end
 
@@ -101,6 +110,10 @@ describe Ov do
         result = test.my_instance_method(1)
         expect(result).to eq ["bar"]
       end
+
+      it "multimethods" do 
+        expect(test.multimethods.size).to eq(3)
+      end
     end      
   end
   
@@ -131,6 +144,11 @@ describe Ov do
       
       it "exception when not defined" do 
         expect{ test_ins.my_instance_method(1,2,3)}.to raise_error(Ov::NotImplementError)
+     end
+
+     it "multimethods" do 
+       expect(test.multimethods.size).to eq(3)
+       expect(test_ins.multimethods.size).to eq(1)
      end
     end
   end
