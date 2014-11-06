@@ -14,17 +14,17 @@ describe Ov do
       
       it "return array" do 
         result = test.my_instance_method(["foo", "bar"], "baz")
-        result.should eq ["foo", "bar", "baz"]
+        expect(result).to eq(["foo", "bar", "baz"])
       end
 
      it "return string" do 
         result = test.my_instance_method("baz")
-        result.should eq "baz"
+        expect(result).to eq "baz"
      end
 
       it "return overridable method" do
         result = test.my_instance_method(1)
-        result.should eq ["bar"]
+        expect(result).to eq ["bar"]
       end
     end
   end
@@ -32,12 +32,12 @@ describe Ov do
   context "override initialize method" do
     it "return new instance with #this method" do 
       test = TestInitialize.new("bar")
-      test.arg.should eq "barfoo"
-      test.class.should eq TestInitialize
+      expect(test.arg).to eq "barfoo"
+      expect(test.class).to eq TestInitialize
     
       test0 = TestInitialize.new(1)
-      test0.arg.should eq 100
-      test0.class.should eq TestInitialize
+      expect(test0.arg).to eq 100
+      expect(test0.class).to eq TestInitialize
     end
   end
 
@@ -52,11 +52,11 @@ describe Ov do
     let(:test){Test0.new}
     it "should call parent method" do 
       result = test.my_instance_method(["foo", "bar"], "baz")
-      result.should eq ["foo", "bar", "baz"]
+      expect(result).to eq ["foo", "bar", "baz"]
     end
     it "should call own method" do 
       result = test.my_instance_method("baz")
-      result.should eq "foo"
+      expect(result).to eq "foo"
     end
   end
 
@@ -65,16 +65,16 @@ describe Ov do
     let(:test) {TestWithoutArguments.new}
     it do 
       result = test.my_instance_method
-      result.should eq "foo"
+      expect(result).to eq "foo"
     end
   end
  
   context "call with Any argument" do
     let(:test) {TestAny.new}
     it do 
-      test.my_instance_method(1).should eq 1
-      test.my_instance_method("foo").should eq "foo"
-      test.my_instance_method(:foo).should eq :foo
+      expect(test.my_instance_method(1)).to eq 1
+      expect(test.my_instance_method("foo")).to eq "foo"
+      expect(test.my_instance_method(:foo)).to eq :foo
     end
   
     it "exception when many arguments or without arguments" do 
@@ -89,17 +89,17 @@ describe Ov do
       
       it "return array" do 
         result = test.my_instance_method(["foo", "bar"], "baz")
-        result.should eq ["foo", "bar", "baz"]
+        expect(result).to eq ["foo", "bar", "baz"]
       end
 
      it "return string" do 
         result = test.my_instance_method("baz")
-        result.should eq "baz"
+        expect(result).to eq "baz"
      end
 
       it "return overridable method" do
         result = test.my_instance_method(1)
-        result.should eq ["bar"]
+        expect(result).to eq ["bar"]
       end
     end      
   end
@@ -111,22 +111,22 @@ describe Ov do
       
       it "return array" do 
         result = test.my_instance_method(["foo", "bar"], "baz")
-        result.should eq ["foo", "bar", "baz"]
+        expect(result).to eq ["foo", "bar", "baz"]
       end
 
       it "return string" do 
         result = test.my_instance_method("baz")
-        result.should eq "baz"
+        expect(result).to eq "baz"
       end
 
       it "return overridable method" do
         result = test.my_instance_method(1)
-        result.should eq ["bar"]
+        expect(result).to eq ["bar"]
       end
       
       it "instance return string" do 
         result = test_ins.my_instance_method("baz")
-        result.should eq "baz"
+        expect(result).to eq "baz"
       end
       
       it "exception when not defined" do 
