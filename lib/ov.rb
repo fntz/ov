@@ -136,8 +136,19 @@ module Ov
     end   
   end
 
+  #
+  # return all defined with +let+ methods.
+  # 
+  def multimethods()
+    owner = need_owner()
+    owner.send(:__overload_methods).map do |method|
+      [method.name, method.types] if method.owner == owner  
+    end.compact
+  end
+
+
   private 
-    def need_owner
+    def need_owner #:nodoc:
       if self.class == Module
           self
         elsif self.respond_to?(:ancestors) && self == ancestors.first
