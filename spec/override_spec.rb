@@ -152,6 +152,26 @@ describe Ov do
      end
     end
   end
+
+  describe "work with blocks" do 
+    let(:instance){ClassWithBlock.new}
+    let(:klass){ClassWithBlock}
+
+    it "should pass block in instance method" do 
+      result = instance.test(3) do 
+        3
+      end
+      expect(result).to eq(6)
+    end
+
+    it "should pass block in class method" do 
+      result = klass.test("foo") do 
+        "bar"
+      end
+      expect(result).to eq("foobar") 
+    end
+  end
+
 end
 
 

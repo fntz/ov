@@ -80,7 +80,7 @@ end
 
 module TestModule
   include Ov
-  extend self
+  
   
   let :my_instance_method, Array, String do |arr, str|
     arr << str
@@ -96,3 +96,18 @@ module TestModule
   end 
 end
 
+class ClassWithBlock
+  include Ov
+   
+
+  let :test, Fixnum do |num, block|
+    num + block.call
+  end
+
+  class << self 
+    include Ov
+    let :test, String do |str, block|
+      str << block.call 
+    end
+  end
+end

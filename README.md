@@ -109,6 +109,24 @@ b.test(123)   # => only for fixnum
 
 ```
 
+Work with blocks
+
+```ruby
+class MyClass
+  include Ov
+  let :my_method, Fixnum do |num, block| # instead of |num, &block|
+    p num
+    block.call
+  end
+end
+
+MyClass.new.my_method(1) do 
+  p "123"
+end
+ # => 1
+ # => 123
+```
+
 Examples
 --------
 see [link](https://github.com/fntzr/ov/blob/master/samples)

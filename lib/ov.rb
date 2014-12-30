@@ -3,7 +3,7 @@ require "ov/ov_array"
 require "ov/ov_method"
 require "ov/ov_any"
 require "ov/exception"
-
+require 'ov/ext/matching'
 
 ##
 # `Ov` module provides functional for creating methods 
@@ -74,6 +74,25 @@ require "ov/exception"
 #   MyClass.cool_method(1)      #=> 2
 #   MyClass.cool_method("test") #=> "test"
 #
+#
+# == Work with blocks
+# 
+# Blocks, should be pass given without ampersand (&)
+#
+#   class MyClass
+#    
+#     let :my_method, Fixnum do |num, block| # instead of |num, &block|
+#       p num
+#       block.call
+#     end
+#
+#   end
+#
+#   MyClass.new.my_method(1) do 
+#     p "123"
+#   end
+#   # => 1
+#   # => 123
 module Ov
   
   def self.included(base) # :nodoc:
@@ -98,7 +117,7 @@ module Ov
   #
   def let(name, *types, &block)
     included = false 
-    
+      
     if self.instance_methods.include?(name)
       included = true
       class_eval "alias :ov_old_#{name.to_s} #{name}"
@@ -129,7 +148,9 @@ module Ov
               raise Ov::NotImplementError.new("Method `#{name}` in `#{self}` class with types `#{types.join(', ')}` not implemented.") 
             end
           else 
-            instance_exec(*args, &z.body)   
+            k = *args
+            k << block if !block.nil? 
+            instance_exec(*k, &z.body)   
           end
         end
       end
