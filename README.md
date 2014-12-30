@@ -16,6 +16,72 @@ Or install it yourself as:
 
     $ gem install ov
 
+
+## Some examples:
+
+```ruby
+require 'ov'
+
+# ====== Define methods
+
+class Foo
+  include Ov
+
+  let :foo, String do |str|
+    # some code 
+  end
+end
+
+foo = Foo.new
+foo.foo("foo") # => ok
+foo.foo(123) # => Method `foo` in `#<Foo:0x007fe423c19dc8>` class with types `Fixnum` not implemented. (Ov::NotImplementError)   
+  
+# ====== Custom Equality for Ruby Types
+
+
+class String
+  include Ov
+  let :is_equal, String do |str|
+    self == str 
+  end 
+
+  let :is_equal, Any do |other|
+    raise TypeError.new("Only for string") 
+  end
+end
+
+str = "foo"
+
+p str == 123            # false, but this different types
+p str.is_equal("bar")   # false
+p str.is_equal("foo")   # true
+p str.is_equal(123)     # TypeError
+
+
+# ====== Use Ov::Ext for matching
+
+require 'kleisli'
+
+include Ov::Ext
+
+match(Try{1/0}) {
+  try(Kleisli::Try::Success) { puts "ok" }
+  try(Kleisli::Try::Failure) { puts "error" }  
+}
+
+result = match(Net::HTTP.get_response(URI("http://google.com"))) do
+  try(Net::HTTPOK) {|r| r.header }
+  try(Net::HTTPMovedPermanently) {|r| r.header }
+  otherwise { "error" }
+end
+
+puts result
+
+```
+
+
+
+
 ## Usage
 
 Firstly include `Ov` in you class
@@ -109,6 +175,28 @@ b.test(123)   # => only for fixnum
 
 ```
 
+Call method:
+
+```ruby
+
+class A 
+  include Ov
+
+  let :test, Fixnum do |num|
+    test("#{num}") # call with string argument
+  end
+  
+  let :test, String do |str|
+    p str
+  end  
+end
+
+a = A.new
+a.test(123) # => "123"
+
+```
+
+
 Work with blocks
 
 ```ruby
@@ -130,6 +218,25 @@ end
 Examples
 --------
 see [link](https://github.com/fntzr/ov/blob/master/samples)
+
+## TODO
+
+1. work with symbol method names: `+, -, *, etc` 
+2. some ideas
+
+```ruby
+# multiple arguments
+let :test, Fixnum, [String] # signature: Fixnum, and others must be String
+
+let :test, Multiple #any types
+
+let :test, :foo # Type must have :foo method
+
+let :test, Or[Fixnum, String] # work for String or Fixnum
+
+```
+
+
 
 ## Contributing
 
