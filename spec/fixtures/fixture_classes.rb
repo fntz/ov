@@ -10,7 +10,7 @@ class Test
     str
   end
 
-  let :my_instance_method, Fixnum do |fixnum|
+  let :my_instance_method, Integer do |fixnum|
     my_instance_method([], my_instance_method("bar"))
   end  
 end
@@ -22,7 +22,7 @@ class TestInitialize
     str << "foo"
     @arg = str
   end
-  let :initialize, Fixnum do |fx|
+  let :initialize, Integer do |fx|
     @arg = fx*100
   end
 end
@@ -30,7 +30,7 @@ end
 
 class TestException
   include Ov
-  let :some_method, Fixnum do |fx|
+  let :some_method, Integer do |fx|
   end
 end
 
@@ -72,7 +72,7 @@ class TestSingletonClass
       str
     end
   
-    let :my_instance_method, Fixnum do |fixnum|
+    let :my_instance_method, Integer do |fixnum|
       my_instance_method([], my_instance_method("bar"))
     end
   end    
@@ -91,7 +91,7 @@ module TestModule
     str
   end
 
-  let :my_instance_method, Fixnum do |fixnum|
+  let :my_instance_method, Integer do |fixnum|
     my_instance_method([], my_instance_method("bar"))
   end 
 end
@@ -100,7 +100,7 @@ class ClassWithBlock
   include Ov
    
 
-  let :test, Fixnum do |num, block|
+  let :test, Integer do |num, block|
     num + block.call
   end
 

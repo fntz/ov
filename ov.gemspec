@@ -6,11 +6,11 @@ require 'ov/version'
 Gem::Specification.new do |spec|
   spec.name          = "ov"
   spec.version       = Ov::VERSION
-  spec.authors       = ["fntzr"]
-  spec.email         = ["fantazuor@gmail.com"]
+  spec.authors       = ["fntz"]
+  spec.email         = ["mike.fch1@gmail.com"]
   spec.description   = %q{write overloaded methods for fun :)}
-  spec.summary       = %q{ov gem provides hacks for write multimemethods in Ruby.}
-  spec.homepage      = "https://github.com/fntzr/ov"
+  spec.summary       = %q{ov gem provide hacks for write multimemethods in Ruby.}
+  spec.homepage      = "https://github.com/fntz/ov"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -19,6 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "~> 2.14.0"
+  spec.add_development_dependency "rake", '~> 0'
+  spec.add_development_dependency "rspec", '~> 2.14', '>= 2.14.0'
 end
