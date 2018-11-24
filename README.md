@@ -1,6 +1,6 @@
 # Ov
 
-Create a multimethods in Ruby
+Create multimethods in Ruby
 
 ## Installation
 
@@ -17,7 +17,7 @@ Or install it yourself as:
     $ gem install ov
 
 
-## Some examples:
+## A few examples:
 
 ```ruby
 require 'ov'
@@ -84,7 +84,7 @@ puts result
 
 ## Usage
 
-Firstly include `Ov` in you class
+Firstly include `Ov` in your class
 
 ```ruby 
 class MyClass 
@@ -92,7 +92,7 @@ class MyClass
 end
 ```
 
-After define method with types:
+After: define method with types:
 
 ```ruby
 class MyClass
@@ -217,7 +217,7 @@ end
 
 Examples
 --------
-see [link](https://github.com/fntzr/ov/blob/master/samples)
+see [link](https://github.com/fntz/ov/blob/master/samples)
 
 ## TODO
 
@@ -226,13 +226,13 @@ see [link](https://github.com/fntzr/ov/blob/master/samples)
 
 ```ruby
 # multiple arguments
-let :test, Fixnum, [String] # signature: Fixnum, and others must be String
+let :test, Integer, [String] # signature: Integer, and others must be String
 
 let :test, Multiple #any types
 
 let :test, :foo # Type must have :foo method
 
-let :test, Or[Fixnum, String] # work for String or Fixnum
+let :test, Or[Integer, String] # work for String or Integer
 
 ```
 
