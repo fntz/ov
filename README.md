@@ -4,11 +4,11 @@ Create multimethods in Ruby
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to Gemfile:
 
     gem 'ov'
 
-And then execute:
+Execute:
 
     $ bundle
 
